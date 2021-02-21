@@ -43,7 +43,7 @@ public class BienImmobilierService {
         } else if (bt == null) {
             return -1;
         } else {
-            return -2;
+            return -3;
         }
 
     }
