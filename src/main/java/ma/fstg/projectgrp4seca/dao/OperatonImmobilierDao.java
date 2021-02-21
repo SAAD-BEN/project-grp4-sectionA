@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OperatonImmobilierDao extends JpaRepository<OperationImmobilier, Long> {
-    OperationImmobilier findbyTitreFoncierBienImmobilier(String titreFoncierBienImmobilier);
+    OperationImmobilier findByTitreFoncierBienImmobilier(String titreFoncierBienImmobilier);
 
-    OperationImmobilier findbyTypeOperation(String typeOperation);
+    OperationImmobilier findByTypeOperation(String typeOperation);
 
-    OperationImmobilier DeletebyTypeOperation(String typeOperation);
+    int deleteByTitreFoncierBienImmobilier(String titreFoncierBienImmobilier);
 
 }

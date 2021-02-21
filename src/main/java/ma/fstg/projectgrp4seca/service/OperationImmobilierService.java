@@ -10,28 +10,35 @@ import java.util.List;
 
 @Service
 public class OperationImmobilierService {
-    public OperationImmobilier findbyTitreFoncierBienImmobilier(String titreFoncierBienImmobilier) {
-        return operationImobilierDao.findbyTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
+    public OperationImmobilier findByTitreFoncierBienImmobilier(String titreFoncierBienImmobilier) {
+        return operationImobilierDao.findByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
     }
 
 
-    public OperationImmobilier findbyTypeOperation(String typeOperation) {
-        return operationImobilierDao.findbyTypeOperation(typeOperation);
+    public OperationImmobilier findByTypeOperation(String typeOperation) {
+        return operationImobilierDao.findByTypeOperation(typeOperation);
     }
+
     @Transactional
-    public OperationImmobilier DeletebyTypeOperation(String typeOperation) {
-        return operationImobilierDao.DeletebyTypeOperation(typeOperation);
+    public int deleteByTitreFoncierBienImmobilier(String titreFoncierBienImmobilier) {
+        return operationImobilierDao.deleteByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
     }
 
     public List<OperationImmobilier> findAll() {
         return operationImobilierDao.findAll();
     }
 
-    public <S extends OperationImmobilier> S save(S s) {
-        return operationImobilierDao.save(s);
+    public int save(OperationImmobilier operationImmobilier) {
+        OperationImmobilier op = findByTitreFoncierBienImmobilier(operationImmobilier.getTitreFoncierBienImmobilier());
+        if (op != null) {
+            return -1;
+        } else {
+            operationImobilierDao.save(operationImmobilier);
+            return 1;
+        }
     }
 
     @Autowired
-    private OperatonImmobilierDao operationImobilierDao ;
+    private OperatonImmobilierDao operationImobilierDao;
 
 }
