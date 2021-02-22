@@ -39,7 +39,7 @@ public class BienImmobilierProvided {
         return bienImmobilierService.findAll();
     }
 
-    @PutMapping("/modifierTitreFoncier/oldT/{oldT}/newMonant/{newT}")
+    @PutMapping("/modifierTitreFoncier/oldT/{oldT}/newTitre/{newT}")
     public int modifyTitreFoncier(@PathVariable String oldT, @PathVariable String newT) {
         return bienImmobilierService.modifyTitreFoncier(oldT, newT);
     }

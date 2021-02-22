@@ -12,6 +12,7 @@ public interface BienImmobilierDao extends JpaRepository<BienImmobilier, Long> {
 
     int deleteByTitreFoncier(String titreFoncier);
 
+
     List<BienImmobilier> findByLocalisationLike(String localistion);
 
     List<BienImmobilier> findBySurfaceGreaterThan(double minSurf);
