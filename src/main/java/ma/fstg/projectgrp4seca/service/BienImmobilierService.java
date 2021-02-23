@@ -57,14 +57,13 @@ public class BienImmobilierService {
 
     public int save(BienImmobilier bienImmobilier) {
         BienImmobilier b = findByTitreFoncier(bienImmobilier.getTitreFoncier());
-
-        if (b != null ||  cadastreDao.findByRef(bienImmobilier.getRefCadastre()) == null) {
+        if (b != null) {
             return -1;
+        } else if (cadastreDao.findByRef(bienImmobilier.getRefCadastre()) == null) {
+            return -2;
         } else {
             bienImmobilierDao.save(bienImmobilier);
             return 1;
         }
-
-
     }
 }
