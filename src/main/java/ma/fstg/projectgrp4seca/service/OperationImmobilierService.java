@@ -14,7 +14,6 @@ public class OperationImmobilierService {
         return operationImobilierDao.findByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
     }
 
-
     public OperationImmobilier findByTypeOperation(String typeOperation) {
         return operationImobilierDao.findByTypeOperation(typeOperation);
     }
@@ -40,5 +39,4 @@ public class OperationImmobilierService {
 
     @Autowired
     private OperatonImmobilierDao operationImobilierDao;
-
 }

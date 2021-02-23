@@ -40,12 +40,13 @@ public class CadastreService {
         }
     }
 
-    public int modifyDescription(String ref,String description) {
+    public int modifyDescription(String ref, String description) {
         Cadastre cadastre = findByRef(ref);
-        if (cadastre==null){
+        if (cadastre == null) {
             return -1;
-        }else {
+        } else {
             cadastre.setDescription(description);
+            cadastreDao.save(cadastre);
             return 1;
         }
     }
