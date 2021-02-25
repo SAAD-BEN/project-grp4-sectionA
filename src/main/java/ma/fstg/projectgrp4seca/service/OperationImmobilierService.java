@@ -1,6 +1,7 @@
 package ma.fstg.projectgrp4seca.service;
 
 import ma.fstg.projectgrp4seca.bean.OperationImmobilier;
+import ma.fstg.projectgrp4seca.dao.BienImmobilierDao;
 import ma.fstg.projectgrp4seca.dao.OperatonImmobilierDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,11 @@ import java.util.List;
 
 @Service
 public class OperationImmobilierService {
+    @Autowired
+    private OperatonImmobilierDao operationImobilierDao;
+    @Autowired
+    private BienImmobilierDao bienImmobilierDao;
+
     public OperationImmobilier findByTitreFoncierBienImmobilier(String titreFoncierBienImmobilier) {
         return operationImobilierDao.findByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
     }
@@ -31,12 +37,11 @@ public class OperationImmobilierService {
         OperationImmobilier op = findByTitreFoncierBienImmobilier(operationImmobilier.getTitreFoncierBienImmobilier());
         if (op != null) {
             return -1;
+        } else if (bienImmobilierDao.findByTitreFoncier(operationImmobilier.getTitreFoncierBienImmobilier()) == null) {
+            return -2;
         } else {
             operationImobilierDao.save(operationImmobilier);
             return 1;
         }
     }
-
-    @Autowired
-    private OperatonImmobilierDao operationImobilierDao;
 }

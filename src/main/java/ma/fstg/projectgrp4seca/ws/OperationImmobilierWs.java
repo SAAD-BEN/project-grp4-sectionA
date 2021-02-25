@@ -21,7 +21,7 @@ public class OperationImmobilierWs {
     }
 
     @Transactional
-    @DeleteMapping("/titreFoncierImmobilier/{titreFoncierImmobilier}")
+    @DeleteMapping("/titreFoncierBienImmobilier/{titreFoncierBienImmobilier}")
     public int deleteByTitreFoncierBienImmobilier(@PathVariable String titreFoncierBienImmobilier) {
         return operationImmobilierService.deleteByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
     }
