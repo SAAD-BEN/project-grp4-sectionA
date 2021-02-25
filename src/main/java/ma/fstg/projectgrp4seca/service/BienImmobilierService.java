@@ -1,7 +1,9 @@
 package ma.fstg.projectgrp4seca.service;
 
 import ma.fstg.projectgrp4seca.bean.BienImmobilier;
+import ma.fstg.projectgrp4seca.bean.Cadastre;
 import ma.fstg.projectgrp4seca.dao.BienImmobilierDao;
+import ma.fstg.projectgrp4seca.dao.CadastreDao;
 import ma.fstg.projectgrp4seca.ws.BienImmobilierProvided;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ import java.util.List;
 public class BienImmobilierService {
     @Autowired
     BienImmobilierDao bienImmobilierDao;
+    @Autowired
+    CadastreDao cadastreDao;
 
     public BienImmobilier findByTitreFoncier(String titreFoncier) {
         return bienImmobilierDao.findByTitreFoncier(titreFoncier);
@@ -38,7 +42,7 @@ public class BienImmobilierService {
     public int modifyTitreFoncier(String oldT, String newT) {
         BienImmobilier bt = findByTitreFoncier(oldT);
         BienImmobilier bt2 = findByTitreFoncier(newT);
-        /**/
+
         if (bt != null && bt2 == null) {
             bt.setTitreFoncier(newT);
             bienImmobilierDao.save(bt);
@@ -55,11 +59,11 @@ public class BienImmobilierService {
         BienImmobilier b = findByTitreFoncier(bienImmobilier.getTitreFoncier());
         if (b != null) {
             return -1;
+        } else if (cadastreDao.findByRef(bienImmobilier.getRefCadastre()) == null) {
+            return -2;
         } else {
             bienImmobilierDao.save(bienImmobilier);
             return 1;
         }
-
-
     }
 }

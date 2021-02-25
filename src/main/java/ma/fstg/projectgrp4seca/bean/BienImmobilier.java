@@ -13,7 +13,15 @@ public class BienImmobilier {
     private String localisation;
     private String titreFoncier;
     private double surface;
+    private String refCadastre ;
 
+    public String getRefCadastre() {
+        return refCadastre;
+    }
+
+    public void setRefCadastre(String refCadastre) {
+        this.refCadastre = refCadastre;
+    }
 
     public Long getId() {
         return id;
