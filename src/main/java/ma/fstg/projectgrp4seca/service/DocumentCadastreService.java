@@ -1,5 +1,6 @@
 package ma.fstg.projectgrp4seca.service;
 
+import ma.fstg.projectgrp4seca.bean.BienImmobilier;
 import ma.fstg.projectgrp4seca.dao.BienImmobilierDao;
 import ma.fstg.projectgrp4seca.bean.DocumentCadastre;
 import ma.fstg.projectgrp4seca.dao.DocumentCadastreDao;
@@ -16,8 +17,8 @@ public class DocumentCadastreService {
     @Autowired
     private BienImmobilierDao bienImmobilierDao;
 
-    public List<DocumentCadastre> findByTitreImmobilier(String titreImmobilier) {
-        return documentCadastreDao.findByTitreImmobilier(titreImmobilier);
+    public List<DocumentCadastre> findByBienImmobilierTitreFoncier(String titreImmobilier) {
+        return documentCadastreDao.findByBienImmobilierTitreFoncier(titreImmobilier);
     }
 
     public List<DocumentCadastre> findAllByDemandeur(String demandeur) {
@@ -29,7 +30,9 @@ public class DocumentCadastreService {
     }
 
     public int save(DocumentCadastre documentCadastre) {
-        if (bienImmobilierDao.findByTitreFoncier(documentCadastre.getTitreImmobilier()) == null) {
+        BienImmobilier b = bienImmobilierDao.findByTitreFoncier(documentCadastre.getBienImmobilier().getTitreFoncier());
+        documentCadastre.setBienImmobilier(b);
+        if (b == null) {
             return -1;
         } else {
             documentCadastreDao.save(documentCadastre);
@@ -38,7 +41,7 @@ public class DocumentCadastreService {
     }
 
     @Transactional
-    public int deleteByTitreImmobilierAndDateDocumentAndTypeDocument(String titreImmobilier, String dateDocument,String typeDocuent) {
-        return documentCadastreDao.deleteByTitreImmobilierAndDateDocumentAndTypeDocument(titreImmobilier, dateDocument,typeDocuent);
+    public int deleteByBienImmobilierTitreFoncierAndDateDocumentAndTypeDocument(String titreImmobilier, String dateDocument, String typeDocuent) {
+        return documentCadastreDao.deleteByBienImmobilierTitreFoncierAndDateDocumentAndTypeDocument(titreImmobilier, dateDocument, typeDocuent);
     }
 }

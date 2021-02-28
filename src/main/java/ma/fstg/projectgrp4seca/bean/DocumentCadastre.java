@@ -1,9 +1,6 @@
 package ma.fstg.projectgrp4seca.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class DocumentCadastre {
@@ -11,10 +8,19 @@ public class DocumentCadastre {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String typeDocument;
-    private String titreImmobilier;
     private double montant;
     private String dateDocument;
     private String demandeur;
+    @ManyToOne
+    private BienImmobilier bienImmobilier;
+
+    public BienImmobilier getBienImmobilier() {
+        return bienImmobilier;
+    }
+
+    public void setBienImmobilier(BienImmobilier bienImmobilier) {
+        this.bienImmobilier = bienImmobilier;
+    }
 
     public Long getId() {
         return id;
@@ -30,14 +36,6 @@ public class DocumentCadastre {
 
     public void setTypeDocument(String typeDocument) {
         this.typeDocument = typeDocument;
-    }
-
-    public String getTitreImmobilier() {
-        return titreImmobilier;
-    }
-
-    public void setTitreImmobilier(String titreImmobilier) {
-        this.titreImmobilier = titreImmobilier;
     }
 
     public double getMontant() {

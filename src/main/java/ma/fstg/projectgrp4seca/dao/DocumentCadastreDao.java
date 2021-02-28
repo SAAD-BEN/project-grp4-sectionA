@@ -8,9 +8,9 @@ import java.util.List;
 
 @Repository
 public interface DocumentCadastreDao extends JpaRepository<DocumentCadastre, Long> {
-    List<DocumentCadastre> findByTitreImmobilier(String titreImmobilier);
+    List<DocumentCadastre> findByBienImmobilierTitreFoncier(String titreImmobilier);
 
     List<DocumentCadastre> findAllByDemandeur(String demandeur);
 
-    int deleteByTitreImmobilierAndDateDocumentAndTypeDocument(String titreImmobilier, String dateDocument,String typeDocuent);
+    int deleteByBienImmobilierTitreFoncierAndDateDocumentAndTypeDocument(String titreImmobilier, String dateDocument,String typeDocuent);
 }

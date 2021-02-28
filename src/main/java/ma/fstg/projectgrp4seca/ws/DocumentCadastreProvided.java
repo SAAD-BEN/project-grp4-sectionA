@@ -15,8 +15,8 @@ public class DocumentCadastreProvided {
     DocumentCadastreService documentCadastreService;
 
     @GetMapping("/titreImmobilier/{titreImmobilier}")
-    public List<DocumentCadastre> findByTitreImmobilier(@PathVariable String titreImmobilier) {
-        return documentCadastreService.findByTitreImmobilier(titreImmobilier);
+    public List<DocumentCadastre> findByBienImmobilierTitreFoncier(@PathVariable String titreImmobilier) {
+        return documentCadastreService.findByBienImmobilierTitreFoncier(titreImmobilier);
     }
 
     @GetMapping("/demandeur/{demandeur}")
@@ -36,7 +36,7 @@ public class DocumentCadastreProvided {
 
     @Transactional
     @DeleteMapping("/titreImmobilier/{titreImmobilier}/dateDocument/{dateDocument}/typeDocuent/{typeDocuent}")
-    public int deleteByTitreImmobilierAndDateDocumentAndTypeDocument(String titreImmobilier, String dateDocument, String typeDocuent) {
-        return documentCadastreService.deleteByTitreImmobilierAndDateDocumentAndTypeDocument(titreImmobilier, dateDocument, typeDocuent);
+    public int deleteByBienImmobilierTitreFoncierAndDateDocumentAndTypeDocument(String titreImmobilier, String dateDocument, String typeDocuent) {
+        return documentCadastreService.deleteByBienImmobilierTitreFoncierAndDateDocumentAndTypeDocument(titreImmobilier, dateDocument, typeDocuent);
     }
 }
