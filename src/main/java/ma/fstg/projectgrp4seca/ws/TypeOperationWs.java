@@ -1,7 +1,9 @@
 package ma.fstg.projectgrp4seca.ws;
 
-import ma.fstg.projectgrp4seca.dao.TypeOperationDao;
+import ma.fstg.projectgrp4seca.bean.TypeOperation;
 import ma.fstg.projectgrp4seca.service.TypeOperationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -10,21 +12,12 @@ import java.util.List;
 @RequestMapping("gestion-cadastre-foncier/TypeOperation")
 
 public class TypeOperationWs {
-
-    @GetMapping("/code/{code}")
-    public TypeOperationDao finfByCode(@PathVariable String code) {
-        return typeOperationService.finfByCode(code);
-    }
+    @Autowired
+    private TypeOperationService typeOperationService;
 
     @GetMapping("/libelle/{libelle}")
-    public TypeOperationDao findByLibelle(@PathVariable String libelle) {
+    public TypeOperation findByLibelle(@PathVariable String libelle) {
         return typeOperationService.findByLibelle(libelle);
-    }
-
-    @Transactional
-    @DeleteMapping("/code/{code}")
-    public int deleteByCode(String code) {
-        return typeOperationService.deleteByCode(code);
     }
 
     @Transactional
@@ -32,11 +25,14 @@ public class TypeOperationWs {
     public int deleteByLibelle(String libelle) {
         return typeOperationService.deleteByLibelle(libelle);
     }
+
     @GetMapping("/")
-    public List<TypeOperationDao> findAll() {
+    public List<TypeOperation> findAll() {
         return typeOperationService.findAll();
     }
 
-    private TypeOperationService typeOperationService ;
-
+    @PutMapping("/")
+    public int save(@RequestBody TypeOperation typeOperation) {
+        return typeOperationService.save(typeOperation);
+    }
 }

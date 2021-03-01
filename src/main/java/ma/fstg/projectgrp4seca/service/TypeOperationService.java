@@ -4,37 +4,34 @@ import ma.fstg.projectgrp4seca.bean.TypeOperation;
 import ma.fstg.projectgrp4seca.dao.TypeOperationDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
+
 @Service
 public class TypeOperationService {
+    @Autowired
+    private TypeOperationDao typeOperationDao;
 
-
-    public TypeOperationDao finfByCode(String code) {
-        return typeOperationDao.finfByCode(code);
-    }
-
-    public TypeOperationDao findByLibelle(String libelle) {
+    public TypeOperation findByLibelle(String libelle) {
         return typeOperationDao.findByLibelle(libelle);
-    }
-    @Transactional
-    public int deleteByCode(String code) {
-        return typeOperationDao.deleteByCode(code);
     }
     @Transactional
     public int deleteByLibelle(String libelle) {
         return typeOperationDao.deleteByLibelle(libelle);
     }
 
-    public List<TypeOperationDao> findAll() {
+    public List<TypeOperation> findAll() {
         return typeOperationDao.findAll();
     }
 
-
-
-    @Autowired
-    private TypeOperationDao typeOperationDao ;
-
+    public int save(TypeOperation typeOperation) {
+        if (typeOperationDao.findByLibelle(typeOperation.getLibelle()) != null) {
+            return -1;
+        } else {
+            typeOperationDao.save(typeOperation);
+            return 1;
+        }
+    }
 }
 

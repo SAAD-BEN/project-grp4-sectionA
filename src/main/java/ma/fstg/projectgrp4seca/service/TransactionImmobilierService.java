@@ -41,7 +41,7 @@ public class TransactionImmobilierService {
     public int save(TransactionImmobilier transactionImmobilier) {
         if (bienImmobilierService.findByTitreFoncier(transactionImmobilier.getBienImmobilier().getTitreFoncier()) == null) {
             return -1;
-        } else if (operationImmobilierService.findByTitreFoncierBienImmobilier(transactionImmobilier.getBienImmobilier().getTitreFoncier()) != null) {
+        } else if (operationImmobilierService.findByBienImmobilierTitreFoncier(transactionImmobilier.getBienImmobilier().getTitreFoncier()) != null) {
             return -2;
         } else {
             transactionImmobilierDao.save(transactionImmobilier);

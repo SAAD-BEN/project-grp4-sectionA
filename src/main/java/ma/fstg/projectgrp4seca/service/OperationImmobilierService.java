@@ -1,8 +1,9 @@
 package ma.fstg.projectgrp4seca.service;
 
+import ma.fstg.projectgrp4seca.bean.BienImmobilier;
 import ma.fstg.projectgrp4seca.bean.OperationImmobilier;
-import ma.fstg.projectgrp4seca.dao.BienImmobilierDao;
-import ma.fstg.projectgrp4seca.dao.OperatonImmobilierDao;
+import ma.fstg.projectgrp4seca.bean.TypeOperation;
+import ma.fstg.projectgrp4seca.dao.OperationImmobilierDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,21 +13,23 @@ import java.util.List;
 @Service
 public class OperationImmobilierService {
     @Autowired
-    private OperatonImmobilierDao operationImobilierDao;
+    private OperationImmobilierDao operationImobilierDao;
     @Autowired
-    private BienImmobilierDao bienImmobilierDao;
+    private BienImmobilierService bienImmobilierService;
+    @Autowired
+    private TypeOperationService typeOperationService;
 
-    public OperationImmobilier findByTitreFoncierBienImmobilier(String titreFoncierBienImmobilier) {
-        return operationImobilierDao.findByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
+    public OperationImmobilier findByBienImmobilierTitreFoncier(String titreFoncier) {
+        return operationImobilierDao.findByBienImmobilierTitreFoncier(titreFoncier);
     }
 
-    public OperationImmobilier findByTypeOperation(String typeOperation) {
-        return operationImobilierDao.findByTypeOperation(typeOperation);
+    public OperationImmobilier findByTypeOperationLibelle(String libelle) {
+        return operationImobilierDao.findByTypeOperationLibelle(libelle);
     }
 
     @Transactional
-    public int deleteByTitreFoncierBienImmobilier(String titreFoncierBienImmobilier) {
-        return operationImobilierDao.deleteByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
+    public int deleteByBienImmobilierTitreFoncier(String titreFoncier) {
+        return operationImobilierDao.deleteByBienImmobilierTitreFoncier(titreFoncier);
     }
 
     public List<OperationImmobilier> findAll() {
@@ -34,12 +37,18 @@ public class OperationImmobilierService {
     }
 
     public int save(OperationImmobilier operationImmobilier) {
-        OperationImmobilier op = findByTitreFoncierBienImmobilier(operationImmobilier.getTitreFoncierBienImmobilier());
-        if (op != null) {
+        BienImmobilier b = bienImmobilierService.findByTitreFoncier(operationImmobilier.getBienImmobilier().getTitreFoncier());
+        OperationImmobilier op = operationImobilierDao.findByBienImmobilierTitreFoncier(operationImmobilier.getBienImmobilier().getTitreFoncier());
+        TypeOperation tpop = typeOperationService.findByLibelle(operationImmobilier.getTypeOperation().getLibelle());
+        if (b == null) {
             return -1;
-        } else if (bienImmobilierDao.findByTitreFoncier(operationImmobilier.getTitreFoncierBienImmobilier()) == null) {
+        } else if (op != null) {
             return -2;
+        } else if (tpop == null) {
+            return -3;
         } else {
+            operationImmobilier.setTypeOperation(tpop);
+            operationImmobilier.setBienImmobilier(b);
             operationImobilierDao.save(operationImmobilier);
             return 1;
         }

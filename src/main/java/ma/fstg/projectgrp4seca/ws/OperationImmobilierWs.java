@@ -11,19 +11,19 @@ import java.util.List;
 @RestController
 @RequestMapping("gestion-cadastre-foncier/OperationImmobile")
 public class OperationImmobilierWs {
-    public OperationImmobilier findbyTitreFoncierBienImmobilier(String titreFoncierBienImmobilier) {
-        return operationImmobilierService.findByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
+    public OperationImmobilier findByBienImmobilierTitreFoncier(String titreFoncier) {
+        return operationImmobilierService.findByBienImmobilierTitreFoncier(titreFoncier);
     }
 
-    @GetMapping("/typeOperation/{typeOperation}")
-    public OperationImmobilier findbyTypeOperation(@PathVariable String typeOperation) {
-        return operationImmobilierService.findByTypeOperation(typeOperation);
+    @GetMapping("/typeoperation/libelle/{libelle}")
+    public OperationImmobilier findByTypeOperationLibelle(@PathVariable String libelle) {
+        return operationImmobilierService.findByTypeOperationLibelle(libelle);
     }
 
     @Transactional
     @DeleteMapping("/titreFoncierBienImmobilier/{titreFoncierBienImmobilier}")
-    public int deleteByTitreFoncierBienImmobilier(@PathVariable String titreFoncierBienImmobilier) {
-        return operationImmobilierService.deleteByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
+    public int deleteByBienImmobilierTitreFoncier(@PathVariable String titreFoncier) {
+        return operationImmobilierService.deleteByBienImmobilierTitreFoncier(titreFoncier);
     }
 
     @GetMapping("/")

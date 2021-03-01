@@ -9,9 +9,9 @@ import javax.persistence.Id;
 public class TypeOperation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id  ;
-    String code ;
-    String libelle ;
+    private Long id;
+    private String code;
+    private String libelle;
 
     public Long getId() {
         return id;
