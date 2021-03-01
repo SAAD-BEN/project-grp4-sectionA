@@ -1,6 +1,7 @@
 package ma.fstg.projectgrp4seca.dao;
 
 import ma.fstg.projectgrp4seca.bean.BienImmobilier;
+import ma.fstg.projectgrp4seca.bean.Cadastre;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +13,7 @@ public interface BienImmobilierDao extends JpaRepository<BienImmobilier, Long> {
 
     int deleteByTitreFoncier(String titreFoncier);
 
+    Cadastre findByCadastreRef(String ref);
 
     List<BienImmobilier> findByLocalisationLike(String localistion);
 

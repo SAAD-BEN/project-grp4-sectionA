@@ -1,35 +1,33 @@
 package ma.fstg.projectgrp4seca.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class TransactionImmobilier {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String titreFoncierBienImmobilier;
     private String typeOperation;
     private String referenceAncienProprietaire;
     private String referenceNouveauProprietaire;
     private double montant;
 
+    @ManyToOne
+    private BienImmobilier bienImmobilier;
+
     public TransactionImmobilier() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-    public TransactionImmobilier(Long id, String titreFoncierBienImmobilier, String typeOperation,
-                                 String referenceAncienProprietaire, String referenceNouveauProprietaire, double montant) {
+    public TransactionImmobilier(Long id, String typeOperation,
+                                 String referenceAncienProprietaire, String referenceNouveauProprietaire, double montant,String titreFoncierBienImmobilier) {
         super();
         this.id = id;
-        this.titreFoncierBienImmobilier = titreFoncierBienImmobilier;
         this.typeOperation = typeOperation;
         this.referenceAncienProprietaire = referenceAncienProprietaire;
         this.referenceNouveauProprietaire = referenceNouveauProprietaire;
         this.montant = montant;
+        this.bienImmobilier.setTitreFoncier(titreFoncierBienImmobilier);
     }
 
     public Long getId() {
@@ -38,14 +36,6 @@ public class TransactionImmobilier {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getTitreFoncierBienImmobilier() {
-        return titreFoncierBienImmobilier;
-    }
-
-    public void setTitreFoncierBienImmobilier(String titreFoncierBienImmobilier) {
-        this.titreFoncierBienImmobilier = titreFoncierBienImmobilier;
     }
 
     public String getTypeOperation() {
@@ -80,11 +70,12 @@ public class TransactionImmobilier {
         this.montant = montant;
     }
 
-    @Override
-    public String toString() {
-        return "TransactionImmobilier [id=" + id + ", titreFoncierBienImmobilier=" + titreFoncierBienImmobilier
-                + ", typeOperation=" + typeOperation + ", referenceAncienProprietaire=" + referenceAncienProprietaire
-                + ", referenceNouveauProprietaire=" + referenceNouveauProprietaire + ", montant=" + montant + "]";
+    public BienImmobilier getBienImmobilier() {
+        return bienImmobilier;
+    }
+
+    public void setBienImmobilier(BienImmobilier bienImmobilier) {
+        this.bienImmobilier = bienImmobilier;
     }
 
     @Override

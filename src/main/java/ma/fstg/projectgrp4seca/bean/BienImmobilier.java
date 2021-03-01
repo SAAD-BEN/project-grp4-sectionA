@@ -1,9 +1,6 @@
 package ma.fstg.projectgrp4seca.bean;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class BienImmobilier {
@@ -13,14 +10,16 @@ public class BienImmobilier {
     private String localisation;
     private String titreFoncier;
     private double surface;
-    private String refCadastre ;
 
-    public String getRefCadastre() {
-        return refCadastre;
+    @ManyToOne
+    private Cadastre cadastre;
+
+    public Cadastre getCadastre() {
+        return cadastre;
     }
 
-    public void setRefCadastre(String refCadastre) {
-        this.refCadastre = refCadastre;
+    public void setCadastre(Cadastre cadastre) {
+        this.cadastre = cadastre;
     }
 
     public Long getId() {

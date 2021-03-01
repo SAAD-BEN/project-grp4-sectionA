@@ -3,9 +3,8 @@ package ma.fstg.projectgrp4seca.service;
 
 import java.util.List;
 
+import ma.fstg.projectgrp4seca.bean.BienImmobilier;
 import ma.fstg.projectgrp4seca.bean.TransactionImmobilier;
-import ma.fstg.projectgrp4seca.dao.BienImmobilierDao;
-import ma.fstg.projectgrp4seca.dao.OperatonImmobilierDao;
 import ma.fstg.projectgrp4seca.dao.TransactionImmobilierDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,20 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TransactionImmobilierService {
+
     @Autowired
     TransactionImmobilierDao transactionImmobilierDao;
     @Autowired
-    OperatonImmobilierDao operatonImmobilierDao;
+    BienImmobilierService bienImmobilierService;
     @Autowired
-    BienImmobilierDao bienImmobilierDao;
+    OperationImmobilierService operationImmobilierService;
 
-    public TransactionImmobilier findByTitreFoncierBienImmobilier(String titreFoncierBienImmobilier) {
-        return transactionImmobilierDao.findByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
+    public BienImmobilier findByBienImmobilierTitreFoncier(String titreFoncier) {
+        return transactionImmobilierDao.findByBienImmobilierTitreFoncier(titreFoncier);
     }
 
     @Transactional
-    public int deleteByTitreFoncierBienImmobilier(String titreFoncierBienImmobilier) {
-        return transactionImmobilierDao.deleteByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
+    public int deleteByBienImmobilierTitreFoncier(String titreFoncierBienImmobilier) {
+        return transactionImmobilierDao.deleteByBienImmobilierTitreFoncier(titreFoncierBienImmobilier);
     }
 
     public List<TransactionImmobilier> findByReferenceNouveauProprietaire(String referenceNouveauProprietaire) {
@@ -39,10 +39,9 @@ public class TransactionImmobilierService {
     }
 
     public int save(TransactionImmobilier transactionImmobilier) {
-        if (bienImmobilierDao.findByTitreFoncier(transactionImmobilier.getTitreFoncierBienImmobilier()) == null) {
+        if (bienImmobilierService.findByTitreFoncier(transactionImmobilier.getBienImmobilier().getTitreFoncier()) == null) {
             return -1;
-        }
-        if (operatonImmobilierDao.findByTitreFoncierBienImmobilier(transactionImmobilier.getTitreFoncierBienImmobilier()) != null) {
+        } else if (operationImmobilierService.findByTitreFoncierBienImmobilier(transactionImmobilier.getBienImmobilier().getTitreFoncier()) != null) {
             return -2;
         } else {
             transactionImmobilierDao.save(transactionImmobilier);

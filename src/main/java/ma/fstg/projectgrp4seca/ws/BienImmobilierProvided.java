@@ -1,6 +1,7 @@
 package ma.fstg.projectgrp4seca.ws;
 
 import ma.fstg.projectgrp4seca.bean.BienImmobilier;
+import ma.fstg.projectgrp4seca.bean.Cadastre;
 import ma.fstg.projectgrp4seca.service.BienImmobilierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,5 +50,8 @@ public class BienImmobilierProvided {
         return bienImmobilierService.save(bienImmobilier);
     }
 
-
+    @GetMapping("/Cadastre/ref/{ref}")
+    public Cadastre findByCadastreRef(String ref) {
+        return bienImmobilierService.findByCadastreRef(ref);
+    }
 }

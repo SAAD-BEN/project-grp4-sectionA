@@ -3,6 +3,8 @@ package ma.fstg.projectgrp4seca.ws;
 
 import java.util.List;
 
+import ma.fstg.projectgrp4seca.bean.BienImmobilier;
+import ma.fstg.projectgrp4seca.bean.OperationImmobilier;
 import ma.fstg.projectgrp4seca.bean.TransactionImmobilier;
 import ma.fstg.projectgrp4seca.service.TransactionImmobilierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,9 @@ public class TransactionImmobilierWs {
     @Autowired
     TransactionImmobilierService transactionImmobilierService;
 
-    @GetMapping("/titreFoncierBienImmobilier/{titreFoncierBienImmobilier}")
-    public TransactionImmobilier findByTitreFoncierBienImmobilier(@PathVariable String titreFoncierBienImmobilier) {
-        return transactionImmobilierService.findByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
-    }
-
     @DeleteMapping("/titreFoncierBienImmobilier/{titreFoncierBienImmobilier}")
-    public int deleteByTitreFoncierBienImmobilier(@PathVariable String titreFoncierBienImmobilier) {
-        return transactionImmobilierService.deleteByTitreFoncierBienImmobilier(titreFoncierBienImmobilier);
+    public int deleteByBienImmobilierTitreFoncier(@PathVariable String titreFoncierBienImmobilier) {
+        return transactionImmobilierService.deleteByBienImmobilierTitreFoncier(titreFoncierBienImmobilier);
     }
 
     @GetMapping("/referenceNouveauProprietaire/{referenceNouveauProprietaire}")
@@ -50,6 +47,11 @@ public class TransactionImmobilierWs {
     @GetMapping("/")
     public List<TransactionImmobilier> findAll() {
         return transactionImmobilierService.findAll();
+    }
+
+    @GetMapping("/bienImmobilier/titreFoncier/{titreFoncier}")
+    public BienImmobilier findByBienImmobilierTitreFoncier(String titreFoncier) {
+        return transactionImmobilierService.findByBienImmobilierTitreFoncier(titreFoncier);
     }
 }
 

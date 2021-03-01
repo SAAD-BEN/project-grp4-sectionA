@@ -16,7 +16,8 @@ public class BienImmobilierService {
     @Autowired
     BienImmobilierDao bienImmobilierDao;
     @Autowired
-    CadastreDao cadastreDao;
+    CadastreService cadastreService;
+
 
     public BienImmobilier findByTitreFoncier(String titreFoncier) {
         return bienImmobilierDao.findByTitreFoncier(titreFoncier);
@@ -57,13 +58,19 @@ public class BienImmobilierService {
 
     public int save(BienImmobilier bienImmobilier) {
         BienImmobilier b = findByTitreFoncier(bienImmobilier.getTitreFoncier());
+        Cadastre c = cadastreService.findByRef(bienImmobilier.getCadastre().getRef());
+        bienImmobilier.setCadastre(c);
         if (b != null) {
             return -1;
-        } else if (cadastreDao.findByRef(bienImmobilier.getRefCadastre()) == null) {
+        } else if (c == null) {
             return -2;
         } else {
             bienImmobilierDao.save(bienImmobilier);
             return 1;
         }
+    }
+
+    public Cadastre findByCadastreRef(String ref) {
+        return bienImmobilierDao.findByCadastreRef(ref);
     }
 }
