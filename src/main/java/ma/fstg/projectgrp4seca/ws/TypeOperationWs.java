@@ -31,7 +31,7 @@ public class TypeOperationWs {
         return typeOperationService.findAll();
     }
 
-    @PutMapping("/")
+    @PostMapping("/")
     public int save(@RequestBody TypeOperation typeOperation) {
         return typeOperationService.save(typeOperation);
     }
