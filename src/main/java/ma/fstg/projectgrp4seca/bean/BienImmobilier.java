@@ -1,5 +1,7 @@
 package ma.fstg.projectgrp4seca.bean;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,16 @@ public class BienImmobilier {
     private String localisation;
     private String titreFoncier;
     private double surface;
+    @ManyToOne
+    private Client proprietaire;
+
+    public Client getProprietaire() {
+        return proprietaire;
+    }
+
+    public void setProprietaire(Client proprietaire) {
+        this.proprietaire = proprietaire;
+    }
 
     @ManyToOne
     private Cadastre cadastre;

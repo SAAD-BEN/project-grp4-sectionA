@@ -20,8 +20,8 @@ public class DocumentCadastreProvided {
     }
 
     @GetMapping("/demandeur/{demandeur}")
-    public List<DocumentCadastre> findAllByDemandeur(@PathVariable String demandeur) {
-        return documentCadastreService.findAllByDemandeur(demandeur);
+    public List<DocumentCadastre> findByDemandeurRef(@PathVariable String ref) {
+        return documentCadastreService.findByDemandeurRef(ref);
     }
 
     @GetMapping("/")

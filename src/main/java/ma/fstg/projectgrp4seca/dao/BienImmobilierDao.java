@@ -19,5 +19,5 @@ public interface BienImmobilierDao extends JpaRepository<BienImmobilier, Long> {
 
     List<BienImmobilier> findBySurfaceGreaterThan(double minSurf);
 
-
+    List<BienImmobilier> findByProprietaireRef(String ref);
 }

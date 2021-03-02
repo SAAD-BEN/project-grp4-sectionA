@@ -10,7 +10,7 @@ import java.util.List;
 public interface DocumentCadastreDao extends JpaRepository<DocumentCadastre, Long> {
     List<DocumentCadastre> findByBienImmobilierTitreFoncier(String titreImmobilier);
 
-    List<DocumentCadastre> findAllByDemandeur(String demandeur);
+    List<DocumentCadastre> findByDemandeurRef(String ref);
 
     int deleteByBienImmobilierTitreFoncierAndDateDocumentAndTypeDocument(String titreImmobilier, String dateDocument,String typeDocuent);
 }

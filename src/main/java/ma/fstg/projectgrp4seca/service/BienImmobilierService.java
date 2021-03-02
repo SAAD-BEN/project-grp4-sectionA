@@ -2,9 +2,8 @@ package ma.fstg.projectgrp4seca.service;
 
 import ma.fstg.projectgrp4seca.bean.BienImmobilier;
 import ma.fstg.projectgrp4seca.bean.Cadastre;
+import ma.fstg.projectgrp4seca.bean.Client;
 import ma.fstg.projectgrp4seca.dao.BienImmobilierDao;
-import ma.fstg.projectgrp4seca.dao.CadastreDao;
-import ma.fstg.projectgrp4seca.ws.BienImmobilierProvided;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +16,12 @@ public class BienImmobilierService {
     BienImmobilierDao bienImmobilierDao;
     @Autowired
     CadastreService cadastreService;
-
+    @Autowired
+    ClientService clientService;
+    @Autowired
+    OperationImmobilierService OperationImmobilierService;
+    @Autowired
+    TransactionImmobilierService transactionImmobilierService;
 
     public BienImmobilier findByTitreFoncier(String titreFoncier) {
         return bienImmobilierDao.findByTitreFoncier(titreFoncier);
@@ -25,7 +29,13 @@ public class BienImmobilierService {
 
     @Transactional
     public int deleteByTitreFoncier(String titreFoncier) {
-        return bienImmobilierDao.deleteByTitreFoncier(titreFoncier);
+        if (OperationImmobilierService.findByBienImmobilierTitreFoncier(titreFoncier) == null) {
+            int s = 0;
+            s += transactionImmobilierService.deleteByBienImmobilierTitreFoncier(titreFoncier);
+            s += bienImmobilierDao.deleteByTitreFoncier(titreFoncier);
+            return s;
+        }
+        return 0;
     }
 
     public List<BienImmobilier> findByLocalisationLike(String localistion) {
@@ -56,15 +66,25 @@ public class BienImmobilierService {
 
     }
 
+    public List<BienImmobilier> findByProprietaireRef(String ref) {
+        return bienImmobilierDao.findByProprietaireRef(ref);
+    }
+
     public int save(BienImmobilier bienImmobilier) {
         BienImmobilier b = findByTitreFoncier(bienImmobilier.getTitreFoncier());
         Cadastre c = cadastreService.findByRef(bienImmobilier.getCadastre().getRef());
-        bienImmobilier.setCadastre(c);
+        Client cl = clientService.findByRef(bienImmobilier.getProprietaire().getRef());
+        if (cl == null) clientService.save(cl);
+        cl = clientService.findByRef(bienImmobilier.getProprietaire().getRef());
         if (b != null) {
             return -1;
         } else if (c == null) {
             return -2;
+        } else if (cl == null) {
+            return -3;
         } else {
+            bienImmobilier.setCadastre(c);
+            bienImmobilier.setProprietaire(cl);
             bienImmobilierDao.save(bienImmobilier);
             return 1;
         }

@@ -10,7 +10,8 @@ public class DocumentCadastre {
     private String typeDocument;
     private double montant;
     private String dateDocument;
-    private String demandeur;
+    @ManyToOne
+    private Client demandeur;
     @ManyToOne
     private BienImmobilier bienImmobilier;
 
@@ -54,11 +55,11 @@ public class DocumentCadastre {
         this.dateDocument = dateDocument;
     }
 
-    public String getDemandeur() {
+    public Client getDemandeur() {
         return demandeur;
     }
 
-    public void setDemandeur(String demandeur) {
+    public void setDemandeur(Client demandeur) {
         this.demandeur = demandeur;
     }
 }

@@ -51,7 +51,12 @@ public class BienImmobilierProvided {
     }
 
     @GetMapping("/Cadastre/ref/{ref}")
-    public Cadastre findByCadastreRef(String ref) {
+    public Cadastre findByCadastreRef(@PathVariable String ref) {
         return bienImmobilierService.findByCadastreRef(ref);
+    }
+
+    @GetMapping("/Proprietaire/ref/{ref}")
+    public List<BienImmobilier> findByProprietaireRef(@PathVariable String ref) {
+        return bienImmobilierService.findByProprietaireRef(ref);
     }
 }
