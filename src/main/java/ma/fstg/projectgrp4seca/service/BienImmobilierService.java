@@ -50,18 +50,20 @@ public class BienImmobilierService {
         return bienImmobilierDao.findAll();
     }
 
-    public int modifyTitreFoncier(String oldT, String newT) {
-        BienImmobilier bt = findByTitreFoncier(oldT);
-        BienImmobilier bt2 = findByTitreFoncier(newT);
-
-        if (bt != null && bt2 == null) {
-            bt.setTitreFoncier(newT);
+    public int modifyProprietaire(String titreFoncier, Client newProp) {
+        BienImmobilier bt = findByTitreFoncier(titreFoncier);
+        Client cl = clientService.findByRef(newProp.getRef());
+        if (bt == null) {
+            return -1;
+        } else if (cl == null) {
+            clientService.save(newProp);
+            bt.setProprietaire(newProp);
             bienImmobilierDao.save(bt);
             return 1;
-        } else if (bt == null) {
-            return -1;
         } else {
-            return -3;
+            bt.setProprietaire(newProp);
+            bienImmobilierDao.save(bt);
+            return 2;
         }
 
     }

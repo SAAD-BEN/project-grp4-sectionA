@@ -2,6 +2,7 @@ package ma.fstg.projectgrp4seca.ws;
 
 import ma.fstg.projectgrp4seca.bean.BienImmobilier;
 import ma.fstg.projectgrp4seca.bean.Cadastre;
+import ma.fstg.projectgrp4seca.bean.Client;
 import ma.fstg.projectgrp4seca.service.BienImmobilierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,8 +42,8 @@ public class BienImmobilierProvided {
     }
 
     @PutMapping("/modifierTitreFoncier/oldT/{oldT}/newTitre/{newT}")
-    public int modifyTitreFoncier(@PathVariable String oldT, @PathVariable String newT) {
-        return bienImmobilierService.modifyTitreFoncier(oldT, newT);
+    public int modifyProprietaire(@PathVariable String titreFoncier, @PathVariable Client newProp) {
+        return bienImmobilierService.modifyProprietaire(titreFoncier, newProp);
     }
 
     @PostMapping("/")
