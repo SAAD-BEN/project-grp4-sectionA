@@ -30,10 +30,9 @@ public class BienImmobilierService {
     @Transactional
     public int deleteByTitreFoncier(String titreFoncier) {
         if (OperationImmobilierService.findByBienImmobilierTitreFoncier(titreFoncier) == null) {
-            int s = 0;
-            s += transactionImmobilierService.deleteByBienImmobilierTitreFoncier(titreFoncier);
-            s += bienImmobilierDao.deleteByTitreFoncier(titreFoncier);
-            return s;
+            transactionImmobilierService.deleteByBienImmobilierTitreFoncier(titreFoncier);
+            bienImmobilierDao.deleteByTitreFoncier(titreFoncier);
+            return 1;
         }
         return 0;
     }
