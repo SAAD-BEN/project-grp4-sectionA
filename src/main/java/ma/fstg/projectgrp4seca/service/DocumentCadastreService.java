@@ -35,12 +35,16 @@ public class DocumentCadastreService {
     public int save(DocumentCadastre documentCadastre) {
         BienImmobilier b = bienImmobilierService.findByTitreFoncier(documentCadastre.getBienImmobilier().getTitreFoncier());
         Client c = clientService.findByRef(documentCadastre.getDemandeur().getRef());
-        documentCadastre.setBienImmobilier(b);
         if (b == null) {
             return -1;
-        } else if (c.getRef() != b.getProprietaire().getRef()) {
+        } else if (c==null){
             return -2;
-        } else {
+        } else if (!c.getRef().equals(b.getProprietaire().getRef())) {
+            return -2;
+        }
+        else {
+            documentCadastre.setBienImmobilier(b);
+            documentCadastre.setDemandeur(c);
             documentCadastreDao.save(documentCadastre);
             return 1;
         }
