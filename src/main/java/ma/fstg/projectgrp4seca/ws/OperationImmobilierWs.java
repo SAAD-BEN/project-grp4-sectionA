@@ -15,8 +15,6 @@ public class OperationImmobilierWs {
     public OperationImmobilier findByBienImmobilierTitreFoncier(@PathVariable String titreFoncier) {
         return operationImmobilierService.findByBienImmobilierTitreFoncier(titreFoncier);
     }
-
-
     @GetMapping("/typeoperation/libelle/{libelle}")
     public OperationImmobilier findByTypeOperationLibelle(@PathVariable String libelle) {
         return operationImmobilierService.findByTypeOperationLibelle(libelle);
