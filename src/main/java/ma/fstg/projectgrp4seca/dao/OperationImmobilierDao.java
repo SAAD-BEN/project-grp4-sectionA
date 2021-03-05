@@ -13,4 +13,5 @@ public interface OperationImmobilierDao extends JpaRepository<OperationImmobilie
 
     int deleteByBienImmobilierTitreFoncier(String titreFoncier);
 
+
 }

@@ -1,6 +1,7 @@
 package ma.fstg.projectgrp4seca.service;
 
 import ma.fstg.projectgrp4seca.bean.BienImmobilier;
+import ma.fstg.projectgrp4seca.bean.Client;
 import ma.fstg.projectgrp4seca.bean.OperationImmobilier;
 import ma.fstg.projectgrp4seca.bean.TypeOperation;
 import ma.fstg.projectgrp4seca.dao.OperationImmobilierDao;
@@ -18,6 +19,7 @@ public class OperationImmobilierService {
     private BienImmobilierService bienImmobilierService;
     @Autowired
     private TypeOperationService typeOperationService;
+
 
     public OperationImmobilier findByBienImmobilierTitreFoncier(String titreFoncier) {
         return operationImobilierDao.findByBienImmobilierTitreFoncier(titreFoncier);
@@ -38,7 +40,7 @@ public class OperationImmobilierService {
 
     public int save(OperationImmobilier operationImmobilier) {
         BienImmobilier b = bienImmobilierService.findByTitreFoncier(operationImmobilier.getBienImmobilier().getTitreFoncier());
-        OperationImmobilier op = operationImobilierDao.findByBienImmobilierTitreFoncier(operationImmobilier.getBienImmobilier().getTitreFoncier());
+        OperationImmobilier op = findByBienImmobilierTitreFoncier(operationImmobilier.getBienImmobilier().getTitreFoncier());
         TypeOperation tpop = typeOperationService.findByLibelle(operationImmobilier.getTypeOperation().getLibelle());
         if (b == null) {
             return -1;
@@ -46,7 +48,9 @@ public class OperationImmobilierService {
             return -2;
         } else if (tpop == null) {
             return -3;
-        } else {
+        } else if (!b.getProprietaire().getRef().equals(operationImmobilier.getProprietaire())){
+            return -4;
+        }else{
             operationImmobilier.setTypeOperation(tpop);
             operationImmobilier.setBienImmobilier(b);
             operationImobilierDao.save(operationImmobilier);

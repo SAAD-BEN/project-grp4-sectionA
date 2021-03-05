@@ -7,13 +7,14 @@ import java.util.Objects;
 public class OperationImmobilier {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private Long id;
     private double montant;
+    private String proprietaire ;
     @ManyToOne
     private BienImmobilier bienImmobilier;
     @ManyToOne
     private TypeOperation typeOperation;
+
 
     public BienImmobilier getBienImmobilier() {
         return bienImmobilier;
@@ -22,7 +23,13 @@ public class OperationImmobilier {
     public void setBienImmobilier(BienImmobilier bienImmobilier) {
         this.bienImmobilier = bienImmobilier;
     }
+    public String getProprietaire() {
+        return proprietaire;
+    }
 
+    public void setProprietaire(String proprietaire) {
+        this.proprietaire = proprietaire;
+    }
     public Long getId() {
         return id;
     }
