@@ -57,11 +57,12 @@ public class BienImmobilierService {
             return -1;
         } else if (cl == null) {
             clientService.save(newProp);
-            bt.setProprietaire(newProp);
+            cl = clientService.findByRef(newProp.getRef());
+            bt.setProprietaire(cl);
             bienImmobilierDao.save(bt);
             return 1;
         } else {
-            bt.setProprietaire(newProp);
+            bt.setProprietaire(cl);
             bienImmobilierDao.save(bt);
             return 2;
         }
@@ -73,26 +74,20 @@ public class BienImmobilierService {
     }
 
     public int save(BienImmobilier bienImmobilier) {
-        BienImmobilier b = findByTitreFoncier(bienImmobilier.getTitreFoncier());
+        BienImmobilier bi = findByTitreFoncier(bienImmobilier.getTitreFoncier());
         Cadastre c = cadastreService.findByRef(bienImmobilier.getCadastre().getRef());
         Client cl = clientService.findByRef(bienImmobilier.getProprietaire().getRef());
-        if (cl == null) clientService.save(cl);
+        if (cl == null) clientService.save(bienImmobilier.getProprietaire());
         cl = clientService.findByRef(bienImmobilier.getProprietaire().getRef());
-        if (b != null) {
+        if (bi != null) {
             return -1;
         } else if (c == null) {
             return -2;
-        } else if (cl == null) {
-            return -3;
         } else {
             bienImmobilier.setCadastre(c);
             bienImmobilier.setProprietaire(cl);
             bienImmobilierDao.save(bienImmobilier);
             return 1;
         }
-    }
-
-    public Cadastre findByCadastreRef(String ref) {
-        return bienImmobilierDao.findByCadastreRef(ref);
     }
 }

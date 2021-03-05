@@ -19,7 +19,7 @@ public class DocumentCadastreProvided {
         return documentCadastreService.findByBienImmobilierTitreFoncier(titreImmobilier);
     }
 
-    @GetMapping("/demandeur/{demandeur}")
+    @GetMapping("/ref/{ref}")
     public List<DocumentCadastre> findByDemandeurRef(@PathVariable String ref) {
         return documentCadastreService.findByDemandeurRef(ref);
     }

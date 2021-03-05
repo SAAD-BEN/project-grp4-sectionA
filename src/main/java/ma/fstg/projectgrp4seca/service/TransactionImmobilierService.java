@@ -3,12 +3,13 @@ package ma.fstg.projectgrp4seca.service;
 
 import java.util.List;
 
+
 import ma.fstg.projectgrp4seca.bean.BienImmobilier;
+import ma.fstg.projectgrp4seca.bean.Client;
 import ma.fstg.projectgrp4seca.bean.TransactionImmobilier;
 import ma.fstg.projectgrp4seca.dao.TransactionImmobilierDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -20,36 +21,36 @@ public class TransactionImmobilierService {
     BienImmobilierService bienImmobilierService;
     @Autowired
     OperationImmobilierService operationImmobilierService;
+    @Autowired
+    ClientService clientService;
 
-    public BienImmobilier findByBienImmobilierTitreFoncier(String titreFoncier) {
+    public List<TransactionImmobilier> findByBienImmobilierTitreFoncier(String titreFoncier) {
         return transactionImmobilierDao.findByBienImmobilierTitreFoncier(titreFoncier);
     }
 
-    @Transactional
-    public int deleteByBienImmobilierTitreFoncier(String titreFoncierBienImmobilier) {
-        return transactionImmobilierDao.deleteByBienImmobilierTitreFoncier(titreFoncierBienImmobilier);
-    }
-
-    public List<TransactionImmobilier> findByReferenceNouveauProprietaire(String referenceNouveauProprietaire) {
-        return transactionImmobilierDao.findByReferenceNouveauProprietaire(referenceNouveauProprietaire);
-    }
-
-    public List<TransactionImmobilier> findByReferenceAncienProprietaire(String referenceAncienProprietaire) {
-        return transactionImmobilierDao.findByReferenceAncienProprietaire(referenceAncienProprietaire);
-    }
-
-    public int save(TransactionImmobilier transactionImmobilier) {
-        if (bienImmobilierService.findByTitreFoncier(transactionImmobilier.getBienImmobilier().getTitreFoncier()) == null) {
-            return -1;
-        } else if (operationImmobilierService.findByBienImmobilierTitreFoncier(transactionImmobilier.getBienImmobilier().getTitreFoncier()) != null) {
-            return -2;
-        } else {
-            transactionImmobilierDao.save(transactionImmobilier);
-            return 1;
-        }
+    public int deleteByBienImmobilierTitreFoncier(String titreFoncier) {
+        return transactionImmobilierDao.deleteByBienImmobilierTitreFoncier(titreFoncier);
     }
 
     public List<TransactionImmobilier> findAll() {
         return transactionImmobilierDao.findAll();
+    }
+
+    public int save(TransactionImmobilier transactionImmobilier) {
+        BienImmobilier b = bienImmobilierService.findByTitreFoncier(transactionImmobilier.getBienImmobilier().getTitreFoncier());
+        if (b == null) {
+            return -1;
+        } else if (operationImmobilierService.findByBienImmobilierTitreFoncier(transactionImmobilier.getBienImmobilier().getTitreFoncier()) != null) {
+            return -2;
+        }else if (b.getProprietaire().getRef().equals(transactionImmobilier.getNouveauProprietaire().getRef())){
+            return -3;
+        } else {
+            bienImmobilierService.modifyProprietaire(transactionImmobilier.getBienImmobilier().getTitreFoncier(), transactionImmobilier.getNouveauProprietaire());
+            Client c = clientService.findByRef(transactionImmobilier.getNouveauProprietaire().getRef());
+            transactionImmobilier.setBienImmobilier(b);
+            transactionImmobilier.setNouveauProprietaire(c);
+            transactionImmobilierDao.save(transactionImmobilier);
+            return 1;
+        }
     }
 }
