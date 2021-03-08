@@ -3,6 +3,7 @@ package ma.fstg.projectgrp4seca.ws;
 import ma.fstg.projectgrp4seca.bean.BienImmobilier;
 import ma.fstg.projectgrp4seca.bean.Client;
 import ma.fstg.projectgrp4seca.service.BienImmobilierService;
+import ma.fstg.projectgrp4seca.vo.BienImmobilierVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,10 @@ import java.util.List;
 public class BienImmobilierProvided {
     @Autowired
     BienImmobilierService bienImmobilierService;
+    @PostMapping("/critere")
+    public List<BienImmobilierVo> findBycritere(@RequestBody BienImmobilierVo bienImmobilierVo) {
+        return bienImmobilierService.findByCritere(bienImmobilierVo);
+    }
 
     @GetMapping("/titreFoncier/{titreFoncier}")
     public BienImmobilier findByTitreFoncier(@PathVariable String titreFoncier) {

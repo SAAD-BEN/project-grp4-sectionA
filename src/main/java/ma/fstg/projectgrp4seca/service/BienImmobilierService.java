@@ -4,10 +4,12 @@ import ma.fstg.projectgrp4seca.bean.BienImmobilier;
 import ma.fstg.projectgrp4seca.bean.Cadastre;
 import ma.fstg.projectgrp4seca.bean.Client;
 import ma.fstg.projectgrp4seca.dao.BienImmobilierDao;
+import ma.fstg.projectgrp4seca.vo.BienImmobilierVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 @Service
@@ -22,6 +24,24 @@ public class BienImmobilierService {
     OperationImmobilierService OperationImmobilierService;
     @Autowired
     TransactionImmobilierService transactionImmobilierService;
+    @Autowired
+    EntityManager entityManager;
+
+   public  List<BienImmobilierVo> findByCritere(BienImmobilierVo bienImmobilierVo) {
+        String query = "SELECT b FROM BienImmobilier b where 1=1";
+        if (bienImmobilierVo.getTitreFoncier() != null && !bienImmobilierVo.getTitreFoncier().isEmpty())
+            query += "AND b.titreFoncier ='" + bienImmobilierVo.getTitreFoncier() + "'";
+        if (bienImmobilierVo.getLocalisation() != null && !bienImmobilierVo.getLocalisation().isEmpty())
+            query += "AND b.localisation ='" + bienImmobilierVo.getLocalisation() + "'";
+        if (bienImmobilierVo.getMaxSurface() != null && !bienImmobilierVo.getMinSurface().isEmpty())
+            query += "AND b.surface <='" + bienImmobilierVo.getMaxSurface() + "'";
+        if (bienImmobilierVo.getMinSurface() != null && !bienImmobilierVo.getMinSurface().isEmpty())
+            query += "AND b.surface >='" + bienImmobilierVo.getMinSurface() + "'";
+
+        return entityManager.createQuery(query).getResultList();
+
+
+    }
 
     public BienImmobilier findByTitreFoncier(String titreFoncier) {
         return bienImmobilierDao.findByTitreFoncier(titreFoncier);
