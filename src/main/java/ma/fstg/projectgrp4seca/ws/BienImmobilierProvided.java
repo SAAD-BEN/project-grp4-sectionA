@@ -15,7 +15,7 @@ public class BienImmobilierProvided {
     @Autowired
     BienImmobilierService bienImmobilierService;
     @PostMapping("/critere")
-    public List<BienImmobilierVo> findBycritere(@RequestBody BienImmobilierVo bienImmobilierVo) {
+    public List<BienImmobilier> findBycritere(@RequestBody BienImmobilierVo bienImmobilierVo) {
         return bienImmobilierService.findByCritere(bienImmobilierVo);
     }
 

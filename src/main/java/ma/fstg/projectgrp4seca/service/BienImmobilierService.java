@@ -27,7 +27,7 @@ public class BienImmobilierService {
     @Autowired
     EntityManager entityManager;
 
-   public  List<BienImmobilierVo> findByCritere(BienImmobilierVo bienImmobilierVo) {
+   public  List<BienImmobilier> findByCritere(BienImmobilierVo bienImmobilierVo) {
         String query = "SELECT b FROM BienImmobilier b where 1=1";
         if (bienImmobilierVo.getTitreFoncier() != null && !bienImmobilierVo.getTitreFoncier().isEmpty())
             query += "AND b.titreFoncier ='" + bienImmobilierVo.getTitreFoncier() + "'";
