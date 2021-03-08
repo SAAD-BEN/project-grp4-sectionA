@@ -2,6 +2,7 @@ package ma.fstg.projectgrp4seca.ws;
 
 import ma.fstg.projectgrp4seca.bean.OperationImmobilier;
 import ma.fstg.projectgrp4seca.service.OperationImmobilierService;
+import ma.fstg.projectgrp4seca.vo.OperationVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,4 +40,8 @@ public class OperationImmobilierWs {
     @Autowired
     private OperationImmobilierService operationImmobilierService;
 
+    @PostMapping("/Criteria")
+    public List<OperationVo> findByCriteria(@RequestBody OperationVo operationVo) {
+        return operationImmobilierService.findByCriteria(operationVo);
+    }
 }
