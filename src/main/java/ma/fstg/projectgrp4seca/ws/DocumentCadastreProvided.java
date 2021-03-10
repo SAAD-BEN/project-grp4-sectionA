@@ -2,6 +2,7 @@ package ma.fstg.projectgrp4seca.ws;
 
 import ma.fstg.projectgrp4seca.bean.DocumentCadastre;
 import ma.fstg.projectgrp4seca.service.DocumentCadastreService;
+import ma.fstg.projectgrp4seca.vo.DocumentCadastreVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +39,10 @@ public class DocumentCadastreProvided {
     @DeleteMapping("/titreImmobilier/{titreImmobilier}/dateDocument/{dateDocument}/typeDocuent/{typeDocuent}")
     public int deleteByBienImmobilierTitreFoncierAndDateDocumentAndTypeDocument(String titreImmobilier, String dateDocument, String typeDocuent) {
         return documentCadastreService.deleteByBienImmobilierTitreFoncierAndDateDocumentAndTypeDocument(titreImmobilier, dateDocument, typeDocuent);
+    }
+
+    @PostMapping("/criterias")
+    public List<DocumentCadastre> findByCriteria(@RequestBody DocumentCadastreVo documentCadastreVo) {
+        return documentCadastreService.findByCriteria(documentCadastreVo);
     }
 }
