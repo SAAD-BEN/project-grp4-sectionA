@@ -3,6 +3,7 @@ package ma.fstg.projectgrp4seca.ws;
 
 import ma.fstg.projectgrp4seca.bean.TransactionImmobilier;
 import ma.fstg.projectgrp4seca.service.TransactionImmobilierService;
+import ma.fstg.projectgrp4seca.vo.TransactionImmobilierVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,11 @@ public class TransactionImmobilierWs {
     @PostMapping("/")
     public int save(@RequestBody TransactionImmobilier transactionImmobilier) {
         return transactionImmobilierService.save(transactionImmobilier);
+    }
+
+    @PostMapping("/criteria")
+    public List<TransactionImmobilier> findByCriteria(@RequestBody TransactionImmobilierVo transactionImmobilierVo) {
+        return transactionImmobilierService.findByCriteria(transactionImmobilierVo);
     }
 }
 

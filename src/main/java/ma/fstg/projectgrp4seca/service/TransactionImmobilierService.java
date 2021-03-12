@@ -8,8 +8,11 @@ import ma.fstg.projectgrp4seca.bean.BienImmobilier;
 import ma.fstg.projectgrp4seca.bean.Client;
 import ma.fstg.projectgrp4seca.bean.TransactionImmobilier;
 import ma.fstg.projectgrp4seca.dao.TransactionImmobilierDao;
+import ma.fstg.projectgrp4seca.vo.TransactionImmobilierVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityManager;
 
 
 @Service
@@ -23,6 +26,8 @@ public class TransactionImmobilierService {
     OperationImmobilierService operationImmobilierService;
     @Autowired
     ClientService clientService;
+    @Autowired
+    EntityManager entityManager;
 
     public List<TransactionImmobilier> findByBienImmobilierTitreFoncier(String titreFoncier) {
         return transactionImmobilierDao.findByBienImmobilierTitreFoncier(titreFoncier);
@@ -52,5 +57,11 @@ public class TransactionImmobilierService {
             transactionImmobilierDao.save(transactionImmobilier);
             return 1;
         }
+    }
+    public List<TransactionImmobilier> findByCriteria(TransactionImmobilierVo transactionImmobilierVo){
+        String query = ("select t from TransactionImmobilier t where 1=1");
+        if (transactionImmobilierVo.getMaxMontant()!=null) query+=(" and t.montant>='" + transactionImmobilierVo.getMaxMontant()+"'");
+        if (transactionImmobilierVo.getMinMontant()!=null) query+=(" and t.montant<='" + transactionImmobilierVo.getMinMontant()+"'");
+        return entityManager.createQuery(query).getResultList();
     }
 }
