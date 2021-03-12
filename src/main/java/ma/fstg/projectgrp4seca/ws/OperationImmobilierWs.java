@@ -41,7 +41,7 @@ public class OperationImmobilierWs {
     private OperationImmobilierService operationImmobilierService;
 
     @PostMapping("/Criteria")
-    public List<OperationVo> findByCriteria(@RequestBody OperationVo operationVo) {
+    public List<OperationImmobilier> findByCriteria(@RequestBody OperationVo operationVo) {
         return operationImmobilierService.findByCriteria(operationVo);
     }
 }

@@ -1,7 +1,6 @@
 package ma.fstg.projectgrp4seca.service;
 
 import ma.fstg.projectgrp4seca.bean.BienImmobilier;
-import ma.fstg.projectgrp4seca.bean.Client;
 import ma.fstg.projectgrp4seca.bean.OperationImmobilier;
 import ma.fstg.projectgrp4seca.bean.TypeOperation;
 import ma.fstg.projectgrp4seca.dao.OperationImmobilierDao;
@@ -62,12 +61,12 @@ public class OperationImmobilierService {
         }
     }
 
-    public List<OperationVo> findByCriteria(OperationVo operationVo){
+    public List<OperationImmobilier> findByCriteria(OperationVo operationVo){
         String query="SELECT o FROM OperationImmobilier o WHERE 1=1";
-            if(operationVo.getMontantMax()!=null && operationVo.getMontantMax()!="")
-                query += " AND o.montant <=  "+operationVo.getMontantMax() ;
-            if(operationVo.getMontantMin()!=null && operationVo.getMontantMin()!="")
-                query += " AND o.montant >=  "+operationVo.getMontantMin() ;
+            if(operationVo.getMontantMax()!=null && operationVo.getMontantMax().isEmpty())
+                query += " AND o.montant <=  '"+operationVo.getMontantMax()+"'";
+            if(operationVo.getMontantMin()!=null && operationVo.getMontantMin().isEmpty())
+                query += " AND o.montant >='"+operationVo.getMontantMin()+"'";
 
           return entityManager.createQuery(query).getResultList();
     }
